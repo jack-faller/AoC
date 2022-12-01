@@ -1,2 +1,2 @@
 #!/usr/bin/env raku
-say [+] $*ARGFILES.split(/\n\n/).map({ [+] .lines }).sort[*-3..*];
+$*ARGFILES.split(/\n\n/)».lines».sum.sort[*-3..*].sum.say;
