@@ -1,2 +1,2 @@
 #!/usr/bin/env raku
-lines.batch(3).map({ [∩] $_».comb })».keys.map((*.ord - 38) % 58).sum.say
+say [+] map (*.keys.ord - 38) % 58, [Z∩] [Z] lines.batch(3)».comb;
