@@ -1,5 +1,5 @@
 #!/usr/bin/env raku
-my (@x, @l);
-(@x[$_[0]].push($_[1]) if $_[1] ne " " for (0..*) Z .comb(4)».substr(1, 1)) if m/"]"/ for reverse @l = lines;
-(@x[$2 - 1].append(@x[$1 - 1][*-$0..*]); @x[$1 - 1].pop for ^$0) if m/move.(\d+).*?(\d+).*?(\d+)/ for @l;
-say @x»[*-1].join;
+my ($s, $m) = $*ARGFILES.split("\n\n")».lines;
+$s = ([Z] $s».comb)».join».trim».flip».comb.batch(4)»[1]»[1..*]».Array;
+($s[$2 - 1].append($s[$1 - 1][*-$0..*]); $s[$1 - 1].pop for ^$0) if m/.*?(\d+).*?(\d+).*?(\d+)/ for @$m;
+say $s»[*-1].join;
