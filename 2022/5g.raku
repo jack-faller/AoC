@@ -1,5 +1,15 @@
 #!/usr/bin/env raku
-my (@x, @l);
-(@x[$_[0]].push($_[1]) if $_[1] ne " " for (0..*) Z .comb(4)».substr(1, 1)) if m/"]"/ for reverse @l = lines;
-(@x[$2 - 1].append(@x[$1 - 1][*-$0..*]); @x[$1 - 1].pop for ^$0) if m/move.(\d+).*?(\d+).*?(\d+)/ for @l;
-say @x»[*-1].join;
+my ($s, $m) = $*ARGFILES.split("\n\n")».lines.map(&reverse);
+for 1..$s[0].comb(/\d*/).max {
+  my ($x, $y) = ($_, 1);
+  for @$m {
+    m/.*?(\d+).*?(\d+).*?(\d+)/;
+	if $1 == $x {
+	  $y += $0;
+	}
+    if $2 == $x {
+	  if $0 >= $y { $x = $1 } else { $y -= $0 }
+	}
+  }
+  ([Z] $s».comb)».join».trim[$x * 4 - 3].substr(* - $y,1).print;
+}
